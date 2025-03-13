@@ -9,11 +9,13 @@ Wearther는 사용자의 현재 위치 정보를 기반으로 기온별 옷차�
 
 ## 🛠️ 기술 스택
 
-- **Frontend**: HTML/CSS/JavaScript, Python  
-- **Backend**: FastAPI  
+- **Frontend**: HTML/CSS/JavaScript, Java  
+- **Backend**: SpringBoot  
 - **Database**: MySQL  
 - **Cloud Services**: AWS  
 - **Deployment Tools**: Docker  
+- **CI/CD**: GitHub Actions
+- **Template Engie**: Thymeleaf
 - **API**: Geolocation API, Fetch API, OpenWeatherMap API, KMA API, Pinterst API  
 
 
