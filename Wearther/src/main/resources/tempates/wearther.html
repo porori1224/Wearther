@@ -9,8 +9,44 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Weather Information</h1>
-    <p th:text="${weather}"></p>
-    <a href="/">Go Back</a>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Wearther Outfit</h2>
+            <ul>
+                <li><i class="fas fa-home"></i> 대시보드</li>
+                <li>현재 날씨</li>
+                <li>미세먼지</li>
+                <li>의상 추천</li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <header>
+                <input type="text" placeholder="도시를 입력하세요:)">
+            </header>
+
+            <section class="weather-info">
+                <div class="weather-card">
+                    <i class="fas fa-cloud"></i>
+                    <h3 th:text="${city}">서울</h3>
+                    <p th:text="${temperature + '°C ' + weatherDescription}">18°C 맑음</p>
+                </div>
+
+                <div class="weather-card">
+                    <h3>미세먼지</h3>
+                    <p th:text="${airQuality}">보통 (PM 2.5: 30)</p>
+                </div> 
+            </section>
+
+            <section class="outfit-recommendation"></section>
+                <h3>오늘의 추천 코디</h3>
+                <div class="outfit-cards">
+                    <div class="outfit-card" th:each="outfit : ${outfits}">
+                        <img th:src="@{${outfit.imageUrl}}" alt="추천 코디">
+                        <p th:text="${outfit.description}">가벼운 자켓과 긴 바지</p>
+                    </div>
+                </div>
+        </main>
+    </div>
 </body>
 </html>
