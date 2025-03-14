@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/") // ✅ 기본 페이지 매핑
     public String home(Model model) {
-        model.addAttribute("message", "Hello, Thymeleaf!");
-        return "index";
+        model.addAttribute("message", "Hello from Spring Boot!");
+        return "wearther"; // templates/weather.html을 렌더링
     }
 }
