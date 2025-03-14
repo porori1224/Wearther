@@ -4,11 +4,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.weather.service.WeatherService;
+
 @RestController
 public class WeatherController {
+    private final WeatherService weatherService;
 
-    @GetMapping("/api/wearther") // ✅ `/weather`에서 `/api/weather`로 변경하여 충돌 방지
+    public WeatherController(WeatherService weatherService) {
+        this.weatherService = weatherService;
+    }
+
+    @GetMapping("/api/weather") // ✅ API 경로 수정
     public String getWeather(@RequestParam(required = false, defaultValue = "Seoul") String city) {
-        return "Weather data for " + city;
+        return weatherService.getWeatherWithAirQuality(city); // 날씨 + 미세먼지 정보 반환
     }
 }

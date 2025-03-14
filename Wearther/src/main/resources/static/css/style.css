@@ -83,6 +83,34 @@ header input {
     text-align: center;
 }
 
+/* 미세먼지 정보 칸 스타일 추가 */
+.air-quality-card {
+    flex: 1;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.weather-info {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.weather-card,
+.air-quality-card {
+    flex: 1;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    text-align: center;
+}
+
 .outfit-recommendation {
     margin-top: 30px;
 }

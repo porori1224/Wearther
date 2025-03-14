@@ -1,4 +1,5 @@
 com/example/weather/controller/WeatherController.class
 com/example/App.class
+com/example/weather/controller/ConfigController.class
 com/example/weather/service/WeatherService.class
 com/example/weather/controller/HomeController.class
