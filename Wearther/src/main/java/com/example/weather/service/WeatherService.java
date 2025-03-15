@@ -80,6 +80,9 @@ public class WeatherService {
 
             JsonNode airJson = objectMapper.readTree(airResponse);
             int airQualityIndex = airJson.get("list").get(0).get("main").get("aqi").asInt();
+            double pm25 = airJson.get("list").get(0).get("components").get("pm2_5").asDouble();
+            double pm10 = airJson.get("list").get(0).get("components").get("pm10").asDouble();
+    
 
             // ✅ 미세먼지 등급 변환
             String airQuality;
@@ -91,12 +94,23 @@ public class WeatherService {
                 default: airQuality = "위험"; break;
             }
 
+            // ✅ 환기 추천 여부 결정
+            String ventilationAdvice;
+            if (pm25 <= 15 && pm10 <= 30) {
+                ventilationAdvice = "✅ 환기 추천";
+            } else if (pm25 <= 35 && pm10 <= 50) {
+                ventilationAdvice = "⚠️ 환기 가능 (주의)";
+            } else {
+                ventilationAdvice = "❌ 환기 비추천";
+            }
+
             // ✅ 최종 JSON 응답 (UI 개선)
             JsonNode finalResponse = objectMapper.createObjectNode()
                     .put("city", cityName) // ✅ 변환된 영문 도시명 사용
                     .put("temperature", df.format(weatherJson.get("main").get("temp").asDouble()) + "°C") // ✅ 소수점 1자리
                     .put("weather", "(" + weatherJson.get("weather").get(0).get("description").asText() + ")") // ✅ 가독성 향상
-                    .put("airQuality", airQuality);
+                    .put("airQuality", airQuality)
+                    .put("ventilation", ventilationAdvice);
 
             return objectMapper.writeValueAsString(finalResponse);
         } catch (HttpClientErrorException e) {

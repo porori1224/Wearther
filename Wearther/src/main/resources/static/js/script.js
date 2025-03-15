@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         airQualityCard.innerHTML = `
             <h3>미세먼지</h3>
             <p>${data.airQuality}</p>
+            <p>${data.ventilation}</p>
         `;
     }
 });
