@@ -13,7 +13,7 @@ Wearther는 사용자의 현재 위치 정보를 기반으로 기온별 옷차�
 - **Backend**: SpringBoot  
 - **Database**: MySQL  
 - **Cloud Services**: AWS  
-- **Deployment Tools**: Docker  
+- **Deployment Tools**: Docker, Docker Compose  
 - **CI/CD**: GitHub Actions
 - **Template Engie**: Thymeleaf
 - **API**: Geolocation API, Fetch API, OpenWeatherMap API, KMA API, Pinterst API  
