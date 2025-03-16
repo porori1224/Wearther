@@ -33,14 +33,16 @@
                 <!-- 날씨 정보 -->
                 <div class="weather-card">
                     <i class="fas fa-cloud"></i>
-                    <h3 th:text="${city}">서울</h3>
-                    <p th:text="${temperature + '°C ' + weatherDescription}">18°C 맑음</p>
+                    <h3><span th:text="${locationType}">현재 위치</span>: <span th:text="${city}">서울</span></h3>
+                    <p>🌡️ <strong>현재 기온:</strong> <span th:text="${temperature}">18°C</span></p>
+                    <p>🌥️ <strong>날씨:</strong> <span th:text="${weather}">맑음</span></p>
                 </div>
 
                 <!-- ✅ 미세먼지 정보를 따로 분리 -->
                 <div class="air-quality-card">
                     <h3>미세먼지</h3>
-                    <p th:text="${airQuality}">보통 (PM 2.5: 30)</p>
+                    <p th:text="${airQuality}">보통</p>
+                    <p th:text="${ventilation}">✅ 환기 추천</p>
                 </div>
             </section>
 

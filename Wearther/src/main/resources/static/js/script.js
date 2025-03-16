@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const airQualityCard = document.querySelector(".air-quality-card"); // ✅ 미세먼지 칸 추가
 
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition (
+        navigator.geolocation.getCurrentPosition(
             (position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     } else {
-        alert ("이 브라우저에서는 위치 서비스를 지원하지 않습니다.");
+        alert("이 브라우저에서는 위치 서비스를 지원하지 않습니다.");
     }
 
     cityInput.addEventListener("keypress", function (event) {
@@ -57,10 +57,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log("🌍 업데이트할 데이터:", data);
 
+        // ✅ undefined 방지: 도시 정보가 없을 경우 기본 값 처리
+        const locationType = data.locationType ? data.locationType : "위치 정보 없음";
+        const cityName = data.city ? data.city : "알 수 없음";
+        const temperature = data.temperature ? data.temperature : "정보 없음";
+        const weather = data.weather ? data.weather.replace(/\(|\)/g, "") : "정보 없음"; // 괄호 제거
+
         weatherCard.innerHTML = `
             <i class="fas fa-cloud"></i>
-            <h3>${data.city}</h3>
-            <p>현재 기온: ${data.temperature} ${data.weather}</p>
+            <h3><strong>${locationType}</strong>: ${cityName}</h3>
+            <p>🌡️ <strong>현재 기온:</strong> ${temperature}</p>
+            <p>🌥️ <strong>날씨:</strong> ${weather}</p>
         `;
 
         airQualityCard.innerHTML = `

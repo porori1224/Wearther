@@ -1,23 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.1</version>  <!-- 최신 버전 확인 후 수정 가능 -->
     </parent>
+
     <groupId>com.example</groupId>
     <artifactId>Wearther</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>Wearther</name>
     <url>http://maven.apache.org</url>
+
     <dependencies>
         <!-- Spring Boot 기본 웹 애플리케이션 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <!-- Thymeleaf 템플릿 엔진 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,4 +68,15 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <!-- 💡 <build> 태그는 <dependencies> 밖에 위치해야 함 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

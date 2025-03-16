@@ -3,11 +3,13 @@ package com.example.weather.service;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.HttpClientErrorException;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
@@ -46,13 +48,12 @@ public class WeatherService {
             }
 
             // ✅ 변환된 도시명 및 좌표 가져오기
-            String englishCity = geoJson.get(0).get("name").asText().replace("-si", "").trim(); // "Naju-si" → "Naju"
+            String englishCity = geoJson.get(0).get("name").asText().replace("-si", "").trim();
             double lat = geoJson.get(0).get("lat").asDouble();
             double lon = geoJson.get(0).get("lon").asDouble();
             System.out.println("✅ 변환된 도시명: " + englishCity);
 
-            // ✅ 변환된 도시명을 사용하여 날씨 및 미세먼지 정보 가져오기
-            return getWeatherByCoords(lat, lon, englishCity);
+            return getWeatherByCoords(lat, lon, "검색 위치");
         } catch (Exception e) {
             e.printStackTrace();
             return "{\"error\": \"데이터를 불러올 수 없습니다.\"}";
@@ -62,7 +63,7 @@ public class WeatherService {
     /**
      * ✅ 위도·경도를 기반으로 날씨 정보 조회
      */
-    public String getWeatherByCoords(double lat, double lon, String cityName) {
+    public String getWeatherByCoords(double lat, double lon, String locationType) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
@@ -73,49 +74,39 @@ public class WeatherService {
             String weatherResponse = restTemplate.getForObject(weatherUrl, String.class);
             JsonNode weatherJson = objectMapper.readTree(weatherResponse);
 
+            // ✅ 도시명 가져오기
+            String cityName = weatherJson.get("name").asText();
+
             // ✅ 미세먼지 API 호출
             String airPollutionUrl = "https://api.openweathermap.org/data/2.5/air_pollution?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY;
             String airResponse = restTemplate.getForObject(airPollutionUrl, String.class);
-            System.out.println("✅ 미세먼지 API 응답: " + airResponse);
-
             JsonNode airJson = objectMapper.readTree(airResponse);
+
             int airQualityIndex = airJson.get("list").get(0).get("main").get("aqi").asInt();
-            double pm25 = airJson.get("list").get(0).get("components").get("pm2_5").asDouble();
-            double pm10 = airJson.get("list").get(0).get("components").get("pm10").asDouble();
-    
+            double pm25 = airJson.path("list").path(0).path("components").path("pm2_5").asDouble(0.0);
+            double pm10 = airJson.path("list").path(0).path("components").path("pm10").asDouble(0.0);
 
             // ✅ 미세먼지 등급 변환
-            String airQuality;
-            switch (airQualityIndex) {
-                case 1: airQuality = "좋음"; break;
-                case 2: airQuality = "보통"; break;
-                case 3: airQuality = "나쁨"; break;
-                case 4: airQuality = "매우 나쁨"; break;
-                default: airQuality = "위험"; break;
-            }
+            String airQuality = switch (airQualityIndex) {
+                case 1 -> "🔵 좋음";
+                case 2 -> "🟢 보통";
+                case 3 -> "🟡 나쁨";
+                case 4 -> "🔴 매우 나쁨";
+                default -> "🟣 위험";
+            };
 
             // ✅ 환기 추천 여부 결정
-            String ventilationAdvice;
-            if (pm25 <= 15 && pm10 <= 30) {
-                ventilationAdvice = "✅ 환기 추천";
-            } else if (pm25 <= 35 && pm10 <= 50) {
-                ventilationAdvice = "⚠️ 환기 가능 (주의)";
-            } else {
-                ventilationAdvice = "❌ 환기 비추천";
-            }
+            String ventilationAdvice = (pm25 <= 15 && pm10 <= 30) ? "✅ 환기 추천" : (pm25 <= 35 && pm10 <= 50) ? "⚠️ 환기 가능 (주의)" : "❌ 환기 비추천";
 
-            // ✅ 최종 JSON 응답 (UI 개선)
+            // ✅ 최종 JSON 응답
             JsonNode finalResponse = objectMapper.createObjectNode()
-                    .put("city", cityName) // ✅ 변환된 영문 도시명 사용
-                    .put("temperature", df.format(weatherJson.get("main").get("temp").asDouble()) + "°C") // ✅ 소수점 1자리
-                    .put("weather", "(" + weatherJson.get("weather").get(0).get("description").asText() + ")") // ✅ 가독성 향상
+                    .put("locationType", locationType + ": " + cityName)
+                    .put("temperature", df.format(weatherJson.get("main").get("temp").asDouble()) + "°C")
+                    .put("weather", "(" + weatherJson.get("weather").get(0).get("description").asText().replace("온흐림", "흐림") + ")")
                     .put("airQuality", airQuality)
                     .put("ventilation", ventilationAdvice);
 
             return objectMapper.writeValueAsString(finalResponse);
-        } catch (HttpClientErrorException e) {
-            System.err.println("❌ API 요청 오류: " + e.getResponseBodyAsString());
-            return "{\"error\": \"API 요청 중 오류가 발생했습니다. (" + e.getStatusCode() + ")\"}";
         } catch (Exception e) {
             e.printStackTrace();
             return "{\"error\": \"현재 위치의 데이터를 불러올 수 없습니다.\"}";
