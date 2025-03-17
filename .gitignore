@@ -3,8 +3,4 @@ src/main/resources/.env
 /target/
 /.vscode/
 src/main/resources/application.properties
-src/main/resources/application.yml
 /.DS_Store
-*.log
-/maven-status/
-/.mvn/
