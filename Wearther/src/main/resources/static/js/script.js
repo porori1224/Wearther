@@ -114,6 +114,19 @@ document.addEventListener("DOMContentLoaded", function () {
             <p>${airQualityIcon} ${data.airQuality}</p>
             <p>${data.ventilation}</p>
         `;
+
+        // ✅ 배경 클래스 초기화
+        document.body.classList.remove("sunny", "rainy", "cloudy", "snowy");
+
+        if (weather.includes("맑음")) {
+            document.body.classList.add("sunny");
+        } else if (weather.includes("비")) {
+            document.body.classList.add("rainy");
+        } else if (weather.includes("흐림") || weather.includes("온흐림")) {
+            document.body.classList.add("cloudy");
+        } else if (weather.includes("눈")) {
+            document.body.classList.add("snowy");
+        }
     }
 
     // ✅ 페이지 로드 시 현재 위치 날씨 자동 가져오기
