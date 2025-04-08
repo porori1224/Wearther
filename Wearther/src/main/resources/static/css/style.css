@@ -88,5 +88,5 @@ body.cloudy {
 }
 
 body.snowy {
-    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    background: linear-gradient(135deg,rgb(198, 218, 255),rgb(138, 187, 255));
 }
