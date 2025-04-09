@@ -1,20 +1,25 @@
 package com.example.weather.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.weather.service.OutfitService;
 import com.example.weather.service.WeatherService;
 
-@RestController
+@Controller
 public class WeatherController {
     private final WeatherService weatherService;
+    private final OutfitService outfitService;
 
-    public WeatherController(WeatherService weatherService) {
+    public WeatherController(WeatherService weatherService, OutfitService outfitService) {
         this.weatherService = weatherService;
+        this.outfitService = outfitService;
     }
 
     @GetMapping("/api/weather") // ✅ API 경로 수정
+    @ResponseBody
     public String getWeather(
         @RequestParam(required = false) String city,
         @RequestParam(required = false) Double lat,
@@ -35,5 +40,13 @@ public class WeatherController {
             e.printStackTrace();
             return "{\"error\": \"서버 내부 오류 발생. 관리자에게 문의하세요.\"}";
         }
+    }
+
+    @GetMapping("/recommend")
+    @ResponseBody
+    public String recommendOutfit(@RequestParam("temperature") double temperature,
+                                  @RequestParam("weather") String weatherCondition,
+                                  @RequestParam("dust") int dustLevel) {
+        return outfitService.recommendOutfit(temperature, weatherCondition, dustLevel);
     }
 }

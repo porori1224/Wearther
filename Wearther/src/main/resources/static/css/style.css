@@ -75,6 +75,20 @@ body {
     text-align: center; /* 🟢 텍스트 중앙 정렬 */
 }
 
+#outfitRecommendation {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    padding: 15px 25px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
 body.sunny {
     background: linear-gradient(135deg, #fceabb, #f8b500);
 }

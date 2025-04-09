@@ -38,12 +38,7 @@
         <!-- 중앙 정렬된 의상 추천 -->
         <section class="outfit-recommendation">
             <h2>오늘의 추천 코디</h2>
-            <div class="outfit-cards">
-                <div class="outfit-card" th:each="outfit : ${outfits}">
-                    <img th:src="@{${outfit.imageUrl}}" alt="추천 코디">
-                    <p th:text="${outfit.description}">가벼운 자켓과 긴 바지</p>
-                </div>
-            </div>
+            <p id="outfitRecommendation">추천된 옷차림이 여기에 표시됩니다.</p>
         </section>
     </div>
 </body>

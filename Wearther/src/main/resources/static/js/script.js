@@ -45,7 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch(url)
             .then(response => response.json())
-            .then(data => updateWeatherCard(data))
+            .then(data => {
+                updateWeatherCard(data);
+            })
             .catch(error => {
                 console.error("❌ API 요청 오류:", error);
                 alert("날씨 정보를 불러오는 중 오류가 발생했습니다.");
@@ -58,7 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch(url)
             .then(response => response.json())
-            .then(data => updateWeatherCard(data))
+            .then(data => {
+                updateWeatherCard(data);
+            })
             .catch(error => {
                 console.error("❌ API 요청 오류:", error);
                 alert("날씨 정보를 불러오는 중 오류가 발생했습니다.");
@@ -78,8 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ undefined 방지: 도시 정보가 없을 경우 기본 값 처리
         const locationType = data.locationType ? data.locationType : "위치 정보 없음";
         const cityName = data.city ? data.city : "";
-        const temperature = data.temperature ? data.temperature : "정보 없음";
-        const weather = data.weather ? data.weather.replace(/\(|\)/g, "") : "정보 없음"; // 괄호 제거
+        const temperatureRaw = data.temperature || "0";
+        const temperature = parseFloat(temperatureRaw); // 문자열에서 숫자 추출
+        const weather = data.weather ? data.weather.replace(/\(|\)/g, "") : "정보 없음";
+        const dust = parseInt(data.pm10Value) || 40;
 
         // ✅ 날씨 상태 아이콘 추가
         const weatherIcons = {
@@ -127,6 +133,30 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (weather.includes("눈")) {
             document.body.classList.add("snowy");
         }
+
+        fetchOutfitRecommendation(temperature, weather, dust);
+    }
+
+    // ✅ 옷차림 추천 함수 추가
+    function fetchOutfitRecommendation(temperature, weather, dustLevel) {
+        if (
+            temperature === undefined || weather === undefined || dustLevel === undefined ||
+            temperature === null || weather === null || dustLevel === null ||
+            isNaN(temperature) || isNaN(dustLevel)
+        ) {
+            console.warn("❗ 추천 요청 생략: 유효하지 않은 입력값입니다.", { temperature, weather, dustLevel });
+            return;
+        }
+
+        const url = `/recommend?temperature=${temperature}&weather=${encodeURIComponent(weather)}&dust=${dustLevel}`;
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector("#outfitRecommendation").innerHTML = html;
+            })
+            .catch(error => {
+                console.error("❌ 옷차림 추천 오류:", error);
+            });
     }
 
     // ✅ 페이지 로드 시 현재 위치 날씨 자동 가져오기
