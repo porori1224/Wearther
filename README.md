@@ -40,29 +40,95 @@ Wearther는 사용자의 현재 위치 정보를 기반으로 기온별 옷차�
 
 ```
 Wearther/
-├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/example/weather/
-│       │       ├── App.java
-│       │       ├── controller/
-│       │       │   ├── ConfigController.java
-│       │       │   ├── HomeController.java
-│       │       │   └── WeatherController.java
-│       │       └── service/       # (현재 비어 있음)
-│       └── resources/
-│           ├── static/
-│           │   ├── css/
-│           │   │   └── style.css
-│           │   └── js/
-│           │       └── script.js
-│           ├── templates/
-│           │   └── wearther.html
-│           ├── application.properties
-│           └── .env
-├── .gitignore
-├── pom.xml
-└── README.md
+Wearther
+ ┣ src
+ ┃ ┣ main
+ ┃ ┃ ┣ java
+ ┃ ┃ ┃ ┗ com
+ ┃ ┃ ┃ ┃ ┣ example
+ ┃ ┃ ┃ ┃ ┃ ┣ weather
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ ConfigController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ HomeController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ WeatherController.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ OutfitService.java
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ WeatherService.java
+ ┃ ┃ ┃ ┃ ┃ ┣ .DS_Store
+ ┃ ┃ ┃ ┃ ┃ ┗ App.java
+ ┃ ┃ ┃ ┃ ┗ .DS_Store
+ ┃ ┃ ┗ resources
+ ┃ ┃ ┃ ┣ ssl
+ ┃ ┃ ┃ ┃ ┗ cloudflare.p12
+ ┃ ┃ ┃ ┣ static
+ ┃ ┃ ┃ ┃ ┣ css
+ ┃ ┃ ┃ ┃ ┃ ┗ style.css
+ ┃ ┃ ┃ ┃ ┣ js
+ ┃ ┃ ┃ ┃ ┃ ┗ script.js
+ ┃ ┃ ┃ ┃ ┗ .DS_Store
+ ┃ ┃ ┃ ┣ templates
+ ┃ ┃ ┃ ┃ ┗ wearther.html
+ ┃ ┃ ┃ ┣ .env
+ ┃ ┃ ┃ ┗ application.properties
+ ┃ ┣ test
+ ┃ ┃ ┗ java
+ ┃ ┃ ┃ ┗ com
+ ┃ ┃ ┃ ┃ ┗ example
+ ┃ ┃ ┃ ┃ ┃ ┗ AppTest.java
+ ┃ ┗ .DS_Store
+ ┣ target
+ ┃ ┣ classes
+ ┃ ┃ ┣ com
+ ┃ ┃ ┃ ┗ example
+ ┃ ┃ ┃ ┃ ┣ weather
+ ┃ ┃ ┃ ┃ ┃ ┣ controller
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ ConfigController.class
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ HomeController.class
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ WeatherController.class
+ ┃ ┃ ┃ ┃ ┃ ┗ service
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ OutfitService.class
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ WeatherService.class
+ ┃ ┃ ┃ ┃ ┗ App.class
+ ┃ ┃ ┣ ssl
+ ┃ ┃ ┃ ┗ cloudflare.p12
+ ┃ ┃ ┣ static
+ ┃ ┃ ┃ ┣ css
+ ┃ ┃ ┃ ┃ ┗ style.css
+ ┃ ┃ ┃ ┗ js
+ ┃ ┃ ┃ ┃ ┗ script.js
+ ┃ ┃ ┣ templates
+ ┃ ┃ ┃ ┗ wearther.html
+ ┃ ┃ ┣ .env
+ ┃ ┃ ┗ application.properties
+ ┃ ┣ generated-sources
+ ┃ ┃ ┗ annotations
+ ┃ ┣ generated-test-sources
+ ┃ ┃ ┗ test-annotations
+ ┃ ┣ maven-archiver
+ ┃ ┃ ┗ pom.properties
+ ┃ ┣ maven-status
+ ┃ ┃ ┗ maven-compiler-plugin
+ ┃ ┃ ┃ ┣ compile
+ ┃ ┃ ┃ ┃ ┗ default-compile
+ ┃ ┃ ┃ ┃ ┃ ┣ createdFiles.lst
+ ┃ ┃ ┃ ┃ ┃ ┗ inputFiles.lst
+ ┃ ┃ ┃ ┗ testCompile
+ ┃ ┃ ┃ ┃ ┗ default-testCompile
+ ┃ ┃ ┃ ┃ ┃ ┣ createdFiles.lst
+ ┃ ┃ ┃ ┃ ┃ ┗ inputFiles.lst
+ ┃ ┣ surefire-reports
+ ┃ ┃ ┣ TEST-com.example.AppTest.xml
+ ┃ ┃ ┗ com.example.AppTest.txt
+ ┃ ┣ test-classes
+ ┃ ┃ ┗ com
+ ┃ ┃ ┃ ┗ example
+ ┃ ┃ ┃ ┃ ┗ AppTest.class
+ ┃ ┣ Wearther-1.0-SNAPSHOT.jar
+ ┃ ┗ Wearther-1.0-SNAPSHOT.jar.original
+ ┣ .DS_Store
+ ┣ Dockerfile
+ ┣ docker-compose.yml
+ ┗ pom.xml
 ```
 
 - `controller/`: 사용자 요청 처리 컨트롤러 클래스들  
