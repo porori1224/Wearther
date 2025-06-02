@@ -20,7 +20,7 @@ public class OutfitService {
         } else if (temperature >= 9) {
             recommendation.append("자켓, 트렌치코트, 야상, 니트, 청바지, 스타킹");
         } else if (temperature >= 5) {
-            recommendation.append("코트, 가죽자켓, 히트텍, 니트, 레킹스");
+            recommendation.append("코트, 가죽자켓, 히트텍, 니트, 레깅스");
         } else {
             recommendation.append("패딩, 두꺼운 코트, 목도리, 기모 제품");
         }
